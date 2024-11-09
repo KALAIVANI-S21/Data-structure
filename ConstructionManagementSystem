@@ -1,0 +1,79 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+
+ struct Node {
+     char name[50];
+     int quantity;
+     struct Node* next;
+ };
+ // Function to create a new node
+ struct Node* createNode(char name[], int quantity) {
+     struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+
+     strcpy(newNode->name, name);
+     newNode->quantity = quantity;
+     newNode->next = NULL;
+     return newNode;
+ }
+ // Function to add a new material to the linked list
+ void addMaterial(struct Node** head, char name[], int quantity) {
+     struct Node* newNode = createNode(name, quantity);
+     newNode->next = *head;
+     *head = newNode;
+ }
+ // Function to display all materials in the linked list
+ void displayMaterials(struct Node* head) {
+     struct Node* current = head;
+     while (current != NULL) {
+         printf("Name: %s, Quantity: %d\n", current->name, current->quantity);
+         current = current->next;
+     }
+ }
+ // Function to retrieve a material by name
+ struct Node* getMaterial(struct Node* head, char name[]) {
+     struct Node* current = head;
+     while (current != NULL) {
+         if (strcmp(current->name, name) == 0) {
+             return current;
+         }
+         current = current->next;
+     }
+     return NULL;
+ }
+ int main() {
+     struct Node* materialsList = NULL;
+     char name[20];
+     int Quantity;
+     int MatQuantity;
+     char testmatname[20];
+     
+     printf("How many Material wants to add : ");
+     scanf("%d", &MatQuantity);
+     for(int a = 1; a <= MatQuantity; a++){
+        // Add materials
+     printf("Enter Material name: ");
+     scanf("%s", name);
+     printf("Enter Quantity: ");
+     scanf("%d", &Quantity);
+   
+     addMaterial(&materialsList, name, Quantity);
+     }
+ 
+   // Display all materials
+     printf("All materials:\n");
+     displayMaterials(materialsList);
+     
+     // Positive Test Case
+     printf("Enter Material Name to find: ");
+     scanf("%s", testmatname);
+     struct Node* material = getMaterial(materialsList, testmatname);
+     if (material != NULL) {
+         printf("Retrieved material: Name: %s, Quantity: %d\n", material->name, material->quantity);
+     } else {
+         printf("Material not found\n");
+     }
+   
+ 
+     return 0;
+ }
